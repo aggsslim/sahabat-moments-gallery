@@ -1,19 +1,21 @@
 import { useState, useCallback } from "react";
-import { Camera } from "lucide-react";
+import { Camera, ChevronLeft, ChevronRight } from "lucide-react";
 import heroImage from "@/assets/gallery-hero.jpg";
 import MonthBox from "@/components/MonthBox";
 import { Photo, getPhotos, savePhoto, deletePhoto, MONTH_NAMES } from "@/lib/photoStorage";
 import { useToast } from "@/hooks/use-toast";
+import { Button } from "@/components/ui/button";
 
 const Index = () => {
   const [photos, setPhotos] = useState<Photo[]>(getPhotos);
+  const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
   const { toast } = useToast();
 
   const handleUpload = useCallback(
-    (dataUrl: string, month: number) => {
-      const photo = savePhoto(dataUrl, month);
+    (dataUrl: string, month: number, year: number) => {
+      const photo = savePhoto(dataUrl, month, year);
       setPhotos((prev) => [photo, ...prev]);
-      toast({ title: `Foto ditambahkan ke ${MONTH_NAMES[month]}! 🎉` });
+      toast({ title: `Foto ditambahkan ke ${MONTH_NAMES[month]} ${year}! 🎉` });
     },
     [toast]
   );
@@ -27,8 +29,12 @@ const Index = () => {
     [toast]
   );
 
-  const photosByMonth = (month: number) =>
-    photos.filter((p) => p.month === month);
+  const photosByMonthAndYear = (month: number) =>
+    photos.filter((p) => p.month === month && (p.year === selectedYear || p.year === undefined));
+
+  const totalPhotosThisYear = photos.filter(
+    (p) => p.year === selectedYear || p.year === undefined
+  ).length;
 
   return (
     <div className="min-h-screen">
@@ -54,21 +60,45 @@ const Index = () => {
 
       {/* Monthly Grid */}
       <main className="mx-auto max-w-5xl px-4 py-10">
-        <h2 className="text-xl font-bold mb-6">📅 Kenangan per Bulan</h2>
+        {/* Year Selector */}
+        <div className="flex items-center justify-between mb-6">
+          <h2 className="text-xl font-bold">📅 Kenangan per Bulan</h2>
+          <div className="flex items-center gap-2">
+            <Button
+              variant="outline"
+              size="icon"
+              className="h-8 w-8 rounded-full"
+              onClick={() => setSelectedYear((y) => y - 1)}
+            >
+              <ChevronLeft className="h-4 w-4" />
+            </Button>
+            <span className="text-lg font-bold min-w-[4rem] text-center">{selectedYear}</span>
+            <Button
+              variant="outline"
+              size="icon"
+              className="h-8 w-8 rounded-full"
+              onClick={() => setSelectedYear((y) => y + 1)}
+            >
+              <ChevronRight className="h-4 w-4" />
+            </Button>
+          </div>
+        </div>
+
         <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-3 sm:gap-4">
           {Array.from({ length: 12 }, (_, i) => (
             <MonthBox
-              key={i}
+              key={`${selectedYear}-${i}`}
               month={i}
-              photos={photosByMonth(i)}
+              year={selectedYear}
+              photos={photosByMonthAndYear(i)}
               onUpload={handleUpload}
               onDelete={handleDelete}
             />
           ))}
         </div>
 
-        <div className="mt-8 text-center text-sm text-muted-foreground">
-          Klik kotak bulan untuk melihat & upload foto
+        <div className="mt-6 text-center text-sm text-muted-foreground">
+          {totalPhotosThisYear} foto di tahun {selectedYear} · Klik kotak bulan untuk melihat & upload
         </div>
       </main>
 

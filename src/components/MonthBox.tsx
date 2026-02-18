@@ -23,12 +23,13 @@ import {
 
 interface MonthBoxProps {
   month: number;
+  year: number;
   photos: Photo[];
-  onUpload: (dataUrl: string, month: number) => void;
+  onUpload: (dataUrl: string, month: number, year: number) => void;
   onDelete: (id: string) => void;
 }
 
-const MonthBox = ({ month, photos, onUpload, onDelete }: MonthBoxProps) => {
+const MonthBox = ({ month, year, photos, onUpload, onDelete }: MonthBoxProps) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const { toast } = useToast();
   const [isOpen, setIsOpen] = useState(false);
@@ -46,13 +47,13 @@ const MonthBox = ({ month, photos, onUpload, onDelete }: MonthBoxProps) => {
       }
       const reader = new FileReader();
       reader.onload = (e) => {
-        if (e.target?.result) onUpload(e.target.result as string, month);
+        if (e.target?.result) onUpload(e.target.result as string, month, year);
       };
       reader.readAsDataURL(file);
     });
   };
 
-  const isCurrentMonth = new Date().getMonth() === month;
+  const isCurrentMonth = new Date().getMonth() === month && new Date().getFullYear() === year;
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
