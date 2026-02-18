@@ -3,6 +3,7 @@ export interface Photo {
   dataUrl: string;
   uploadedAt: string; // ISO string
   month: number; // 0-11
+  year: number;
 }
 
 const STORAGE_KEY = "galeri-sahabat-photos";
@@ -16,13 +17,14 @@ export function getPhotos(): Photo[] {
   }
 }
 
-export function savePhoto(dataUrl: string, month: number): Photo {
+export function savePhoto(dataUrl: string, month: number, year: number): Photo {
   const photos = getPhotos();
   const photo: Photo = {
     id: crypto.randomUUID(),
     dataUrl,
     uploadedAt: new Date().toISOString(),
     month,
+    year,
   };
   photos.unshift(photo);
   localStorage.setItem(STORAGE_KEY, JSON.stringify(photos));
