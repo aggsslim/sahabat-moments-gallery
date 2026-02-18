@@ -2,6 +2,7 @@ import { useState, useCallback } from "react";
 import { Camera, ChevronLeft, ChevronRight } from "lucide-react";
 import heroImage from "@/assets/gallery-hero.jpg";
 import MonthBox from "@/components/MonthBox";
+import SplashScreen from "@/components/SplashScreen";
 import { Photo, getPhotos, savePhoto, deletePhoto, MONTH_NAMES } from "@/lib/photoStorage";
 import { useToast } from "@/hooks/use-toast";
 import { Button } from "@/components/ui/button";
@@ -9,6 +10,7 @@ import { Button } from "@/components/ui/button";
 const Index = () => {
   const [photos, setPhotos] = useState<Photo[]>(getPhotos);
   const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
+  const [showSplash, setShowSplash] = useState(true);
   const { toast } = useToast();
 
   const handleUpload = useCallback(
@@ -37,7 +39,9 @@ const Index = () => {
   ).length;
 
   return (
-    <div className="min-h-screen">
+    <>
+      {showSplash && <SplashScreen onFinish={() => setShowSplash(false)} />}
+      <div className="min-h-screen">
       {/* Hero Section */}
       <header className="relative overflow-hidden bg-secondary">
         <div className="absolute inset-0">
@@ -107,6 +111,7 @@ const Index = () => {
         Galeri Sahabat &copy; {new Date().getFullYear()} — Simpan kenanganmu ✨
       </footer>
     </div>
+    </>
   );
 };
 
