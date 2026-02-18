@@ -2,6 +2,7 @@ export interface Photo {
   id: string;
   dataUrl: string;
   uploadedAt: string; // ISO string
+  month: number; // 0-11
 }
 
 const STORAGE_KEY = "galeri-sahabat-photos";
@@ -15,17 +16,23 @@ export function getPhotos(): Photo[] {
   }
 }
 
-export function savePhoto(dataUrl: string): Photo {
+export function savePhoto(dataUrl: string, month: number): Photo {
   const photos = getPhotos();
   const photo: Photo = {
     id: crypto.randomUUID(),
     dataUrl,
     uploadedAt: new Date().toISOString(),
+    month,
   };
   photos.unshift(photo);
   localStorage.setItem(STORAGE_KEY, JSON.stringify(photos));
   return photo;
 }
+
+export const MONTH_NAMES = [
+  "Januari", "Februari", "Maret", "April", "Mei", "Juni",
+  "Juli", "Agustus", "September", "Oktober", "November", "Desember",
+];
 
 export function deletePhoto(id: string): void {
   const photos = getPhotos().filter((p) => p.id !== id);
