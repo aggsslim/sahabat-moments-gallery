@@ -109,8 +109,8 @@ export default {
           "50%": { transform: "translateY(-10px) scale(1.1)" },
         },
         "pulse-glow": {
-          "0%, 100%": { boxShadow: "0 0 0 0 hsl(var(--primary) / 0.3)" },
-          "50%": { boxShadow: "0 0 20px 4px hsl(var(--primary) / 0.15)" },
+          "0%, 100%": { boxShadow: "0 0 0 0 hsl(var(--primary) / 0.3)", borderColor: "hsl(var(--primary) / 0.5)" },
+          "50%": { boxShadow: "0 0 20px 6px hsl(var(--primary) / 0.2)", borderColor: "hsl(var(--primary) / 0.9)" },
         },
         "hero-parallax": {
           from: { transform: "scale(1.1)" },
