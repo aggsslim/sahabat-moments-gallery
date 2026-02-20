@@ -59,9 +59,9 @@ const MonthBox = ({ month, year, photos, onUpload, onDelete }: MonthBoxProps) =>
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
         <button
-          className={`group relative flex flex-col items-center justify-center rounded-xl border-2 border-dashed p-4 aspect-square transition-all duration-300 cursor-pointer hover:-translate-y-1 hover:photo-card-shadow ${
+          className={`group relative flex flex-col items-center justify-center rounded-xl border-2 border-dashed p-4 aspect-square transition-all duration-300 cursor-pointer hover:-translate-y-1.5 hover:photo-card-shadow-hover active:scale-[0.97] ${
             isCurrentMonth
-              ? "border-primary/50 bg-primary/5"
+              ? "border-primary/50 bg-primary/5 animate-pulse-glow"
               : "border-border bg-card hover:border-primary/30 hover:bg-primary/5"
           }`}
         >
@@ -87,7 +87,7 @@ const MonthBox = ({ month, year, photos, onUpload, onDelete }: MonthBoxProps) =>
             </div>
           ) : (
             <div className="flex flex-col items-center gap-1 text-muted-foreground">
-              <ImagePlus className="h-8 w-8 opacity-40 group-hover:opacity-70 transition-opacity" />
+              <ImagePlus className="h-8 w-8 opacity-40 group-hover:opacity-70 group-hover:scale-110 transition-all duration-300" />
               <span className="text-xs">Kosong</span>
             </div>
           )}

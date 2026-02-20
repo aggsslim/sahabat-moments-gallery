@@ -80,9 +80,21 @@ export default {
           from: { opacity: "0", transform: "translateY(12px)" },
           to: { opacity: "1", transform: "translateY(0)" },
         },
+        "fade-up": {
+          from: { opacity: "0", transform: "translateY(24px)" },
+          to: { opacity: "1", transform: "translateY(0)" },
+        },
         "scale-in": {
           from: { opacity: "0", transform: "scale(0.95)" },
           to: { opacity: "1", transform: "scale(1)" },
+        },
+        "slide-up-fade": {
+          from: { opacity: "0", transform: "translateY(20px) scale(0.96)" },
+          to: { opacity: "1", transform: "translateY(0) scale(1)" },
+        },
+        "shimmer": {
+          "0%": { backgroundPosition: "-200% 0" },
+          "100%": { backgroundPosition: "200% 0" },
         },
         "float-1": {
           "0%, 100%": { transform: "translateY(0) rotate(0deg)" },
@@ -96,15 +108,28 @@ export default {
           "0%, 100%": { transform: "translateY(0) scale(1)" },
           "50%": { transform: "translateY(-10px) scale(1.1)" },
         },
+        "pulse-glow": {
+          "0%, 100%": { boxShadow: "0 0 0 0 hsl(var(--primary) / 0.3)" },
+          "50%": { boxShadow: "0 0 20px 4px hsl(var(--primary) / 0.15)" },
+        },
+        "hero-parallax": {
+          from: { transform: "scale(1.1)" },
+          to: { transform: "scale(1)" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
         "fade-in": "fade-in 0.4s ease-out forwards",
+        "fade-up": "fade-up 0.6s ease-out forwards",
         "scale-in": "scale-in 0.3s ease-out forwards",
+        "slide-up-fade": "slide-up-fade 0.5s cubic-bezier(0.16,1,0.3,1) forwards",
+        "shimmer": "shimmer 2s linear infinite",
         "float-1": "float-1 3s ease-in-out infinite",
         "float-2": "float-2 4s ease-in-out infinite",
         "float-3": "float-3 3.5s ease-in-out infinite",
+        "pulse-glow": "pulse-glow 2s ease-in-out infinite",
+        "hero-parallax": "hero-parallax 1.2s ease-out forwards",
       },
     },
   },
